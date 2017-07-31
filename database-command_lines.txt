@@ -1,0 +1,2 @@
+// Run mongodb in another folder (default /data/db)
+mongod --dbpath ~/Documents/mongodb/db/

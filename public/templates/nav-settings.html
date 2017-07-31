@@ -1,0 +1,32 @@
+<!--
+/**
+ * Created by fredericlopesgoncalvesmagalhaes
+ * @copyright Frederic Lopes Goncalves Magalhaes 2017
+*/
+-->
+<div class="container">
+  <h2>Security System Settings</h2>
+  <div class="list-group">
+    <li class="list-group-item">
+      Security System
+      <span class="pull-right">
+        <label class="switch">
+          <input type="checkbox" ng-model="system.enable" ng-checked="system.enable" ng-click="systemChange()"/>
+          <div class="slider round"></div>
+        </label>
+      </span>
+    </li>
+
+  </div>
+  <h2>Your profile</h2>
+  <div class="list-group">
+    <li class="list-group-item">
+      Custom Emergency Numbers
+      <span class="pull-right"></span>
+    </li>
+    <a href="#" class="list-group-item">
+      Change your password
+      <span class="pull-right"></span>
+    </a>
+  </div>
+</div>

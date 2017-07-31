@@ -1,0 +1,24 @@
+<!--
+/**
+ * Created by fredericlopesgoncalvesmagalhaes
+ * @copyright Frederic Lopes Goncalves Magalhaes 2017
+*/
+-->
+<ui-view>
+  <h3>Connected objects</h3>
+  <select class="form-control" ng-model="selectedRoom.id" ng-change="update()">
+    <option ng-repeat="room in rooms" ng-selected="selectedRoom.id == room._id" ng-value="room._id">{{room.name}}</option>
+  </select>
+
+  <div class="list-group">
+    <li class="list-group-item" ng-repeat="obj in objects">
+      {{obj.name}}
+      <span class="pull-right">
+        <label class="switch">
+          <input type="checkbox" ng-model="obj.checked" ng-checked="obj.checked" ng-click="toggleEvent(obj)"/>
+          <div class="slider round"></div>
+        </label>
+      </span>
+    </li>
+  </div>
+</ui-view>
