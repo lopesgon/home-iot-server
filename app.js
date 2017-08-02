@@ -26,7 +26,7 @@ mongoose.connect(config.database, function(err){
 require('./config/passport')(passport);
 
 var index = require('./routes/index');
-var auth = require('./routes/api_auth');
+var authenticate = require('./routes/api_auth');
 var middleware = require('./routes/api_middleware');
 var iot = require('./routes/api_iot');
 var events = require('./routes/api_events');
@@ -48,9 +48,16 @@ app.use(helmet({
   noCache: true
 })); // small security for headers (not enough!)
 
-app.use('/api/auth', auth);
-app.use('/api/events', events);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.use('/api/authenticate', authenticate);
+// Middleware has to be after authenticate API as we get the Token after being authenticated.
 app.use('/api', middleware);
+app.use('/api/events', events);
 app.use('/api/iot', iot);
 app.use('/', index);
 

@@ -13,10 +13,15 @@ var UserSchema = new Schema({
     unique: true,
     required: true
   },
+  username: {
+    type: String,
+      unique: true,
+      required: true
+  },
   password: {
     type: String,
     required: true
-  },
+  }
 
   /* // SHOULD BE ADDED WITH A NEW STEP in comparePassword()
   salt: {
@@ -24,7 +29,7 @@ var UserSchema = new Schema({
     require: true
   },
   */
-
+  /*
   role: {
     type: Schema.Types.ObjectId,
     ref: 'Role',
@@ -48,6 +53,7 @@ var UserSchema = new Schema({
       }
     }]
   }
+  */
 
 });
 
