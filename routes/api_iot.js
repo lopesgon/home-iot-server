@@ -6,9 +6,12 @@ var express = require('express');
 var router = express.Router();
 var Room = require('../app/models/room');
 
-router.post('/rooms', function(req, res){
+router.get('/rooms', function(req, res){
   Room.find({}, function(err, rooms) {
     if(err) throw err;
+
+    console.log("iot api/iot/rooms");
+    console.log(rooms);
     res.json({success: true, rooms: rooms});
   });
 });

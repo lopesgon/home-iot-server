@@ -9,6 +9,7 @@ var config = require('../config/database');
 var User = require('../app/models/user');
 
 router.use(function(req, res, next) {
+  console.log(req.headers.authorization);
   var token = getToken(req.headers);
   if (token) {
     var decoded = jwt.decode(token, config.secret);

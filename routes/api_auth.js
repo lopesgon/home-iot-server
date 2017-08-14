@@ -29,7 +29,7 @@ router.post('/', function(req, res) {
           // return the information including token as JSON
           res.json({success: true, token: 'JWT ' + token});
         } else {
-          res.json({success: false, msg: 'Authentication failed. Wrong password.'});
+          res.json({success: false, msg: 'Authentication failed.'});
         }
       });
     }
@@ -41,8 +41,8 @@ TO DELETE - FOR CREATING NEW USERS FOR TESTING PURPOSE
 USERS SHOULD BE CREATED ONLY IN LOCAL NETWORK, AVOID OUTSIDERS TO HAVE AN ACCESS
 */
 .post('/register', function(req, res) {
-  if (!req.body.username || !req.body.password) {
-    res.json({success: false, msg: 'Please pass name and password.'});
+  if (!req.body.name || !req.body.username || !req.body.password) {
+    res.json({success: false, msg: 'Please pass required attributes.'});
   } else {
     var newUser = new User({
       name: req.body.name,
@@ -50,7 +50,6 @@ USERS SHOULD BE CREATED ONLY IN LOCAL NETWORK, AVOID OUTSIDERS TO HAVE AN ACCESS
       password: req.body.password
     });
 
-    // save the user
     newUser.save(function(err) {
       if (err) {
         console.log(err);
