@@ -20,7 +20,40 @@ var gfs = Grid(conn.db);
 
 // var Event = require('../app/models/event');
 
-router
+router.get('/', function(req, res){
+  gfs.files.find({}).toArray(function(err, files){
+    if(err) {
+      var head = {
+        'X-error-message' : 'Internal server error'
+      };
+      res.writeHead(500, head);
+      res.send();
+    }
+    res.json({success: true, events: files});
+  });
+})
+.get('/:id', function(req, res){
+  console.log('router/api_events/:id : get events');
+  var id = 0;
+  if(req.params.id){
+      id = req.params.id;
+  }
+  console.log("router/api_events/:id : ID received to do infinite scroll: " + id);
+
+  gfs.files.find({}).toArray(function(err, files){
+      if(err) console.log(err);
+      res.json({success: true, events: files});
+  });
+
+  /*
+   var lastId = req.body.id;
+   gfs.files.find().sort({uploadDate:-1}).limit(10).toArray(function(err, files){
+   if(err) next(err);
+   res.send({success: true, events: files});
+   });
+   */
+
+})
 .post('/delete', function(req, res, next){
   options = {
     _id: req.body.fileId
@@ -33,29 +66,12 @@ router
       gfs.remove(options, function(err){
         //console.log("Error occured while deleting stream: " + err);
       });
-      res.send({success: true, msg:"Document deleted successfuly."});
+      res.json({success: true, msg:"Document deleted successfuly."});
     }else{
-      console.log("File doesn't exist.");
-      res.send({success: false, msg:"Fail to delete document."});
+      console.log("routes/api_events/delete : File doesn't exist.");
+      res.json({success: false, msg:"Fail to delete document."});
     }
   });
-})
-.post('/:id', function(req, res){
-  var id = req.params.id;
-  console.log("ID received for inifinite scroll: " + id);
-  gfs.files.find({}).toArray(function(err, files){
-    if(err) console.log(err);
-    res.send({success: true, events: files});
-  });
-
-  /*
-   var lastId = req.body.id;
-   gfs.files.find().sort({uploadDate:-1}).limit(10).toArray(function(err, files){
-   if(err) next(err);
-   res.send({success: true, events: files});
-   });
-   */
-
 })
 .get('/video/:id', function(req, res, next){
   var options = {
@@ -134,8 +150,8 @@ router
         return next(err);
       });
     }else{
-      console.log("IMG DOESNT EXIST");
-      res.send({succes:false, msg:"FILE DOESNT EXIST"});
+      console.log("router/api_events/image/:id : IMG DOESNT EXIST");
+      res.json({succes:false, msg:"FILE DOESNT EXIST"});
     }
   });
 });

@@ -79,6 +79,7 @@ module.exports = {
   startSocketServer: function(){
     if(listener) {
       listener.sockets.on('connection', function (socket) {
+        console.log("someone connected");
         socket.on('room:object', function (data) {
           Room.findOne({_id: data.room}, function (err, room) {
             if (err) throw err;
@@ -103,6 +104,13 @@ module.exports = {
             }
             socket.broadcast.emit('message', data);
           });
+
+
+        });
+
+        socket.on('test', function(data) {
+          console.log("app/sockets: test to delete");
+          socket.broadcast.emit('test', data);
         });
 
         socket.on('join:room', function (room) {
